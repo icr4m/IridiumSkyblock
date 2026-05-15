@@ -20,7 +20,7 @@ import java.util.Map;
 public class Schematics {
 
     public Map<String, SchematicConfig> schematics = ImmutableMap.<String, SchematicConfig>builder()
-            .put("desert", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 11, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGY0OTNkZDgwNjUzM2Q5ZDIwZTg0OTUzOTU0MzY1ZjRkMzY5NzA5Y2ViYzlkZGVmMDIyZDFmZDQwZDg2YTY4ZiJ9fX0=", 1, "&9&lDesert Island", Arrays.asList("&7A starter desert island.", "", "&9&l[!] &7Costs $1000")),
+            .put("desert", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 11, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGY0OTNkZDgwNjUzM2Q5ZDIwZTg0OTUzOTU0MzY1ZjRkMzY5NzA5Y2ViYzlkZGVmMDIyZDFmZDQwZDg2YTY4ZiJ9fX0=", 1, "&9&lÎle du Désert", Arrays.asList("&7Une île désertique de départ.", "", "&9&l[!] &7Coûte 1000$")),
                     new Schematics.Cost(0, new HashMap<>()), 1, -0.5, 89, -0.5, 90, new SchematicWorld(XBiome.DESERT,
                     "desert.schem", 90.0, true
             ), new SchematicWorld(XBiome.NETHER_WASTES,
@@ -28,7 +28,7 @@ public class Schematics {
             ), new SchematicWorld(XBiome.THE_END,
                     "desert_end.schem", 90.0, true
             )))
-            .put("jungle", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 13, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjgzYWRmNDU2MGRlNDc0MTQwNDA5M2FjNjFjMzNmYjU1NmIzZDllZTUxNDBmNjIwMzYyNTg5ZmRkZWRlZmEyZCJ9fX0=", 1, "&9&lJungle Island", Arrays.asList("&7A starter jungle island.", "", "&9&l[!] &7Costs $1000")),
+            .put("jungle", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 13, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjgzYWRmNDU2MGRlNDc0MTQwNDA5M2FjNjFjMzNmYjU1NmIzZDllZTUxNDBmNjIwMzYyNTg5ZmRkZWRlZmEyZCJ9fX0=", 1, "&9&lÎle de la Jungle", Arrays.asList("&7Une île de jungle de départ.", "", "&9&l[!] &7Coûte 1000$")),
                     new Schematics.Cost(0, new HashMap<>()), 1, 1.5, 83, 1.5, 90, new SchematicWorld(XBiome.JUNGLE,
                     "jungle.schem", 90.0, true
             ), new SchematicWorld(XBiome.NETHER_WASTES,
@@ -36,7 +36,7 @@ public class Schematics {
             ), new SchematicWorld(XBiome.THE_END,
                     "jungle_end.schem", 90.0, true
             )))
-            .put("mushroom", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 15, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWE0NWQxYjQxN2NiZGRjMjE3NjdiMDYwNDRlODk5YjI2NmJmNzhhNjZlMjE4NzZiZTNjMDUxNWFiNTVkNzEifX19", 1, "&9&lMushroom Island", Arrays.asList("&7A starter mushroom island.", "", "&9&l[!] &7Costs $1000")),
+            .put("mushroom", new SchematicConfig(new Item(XMaterial.PLAYER_HEAD, 15, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWE0NWQxYjQxN2NiZGRjMjE3NjdiMDYwNDRlODk5YjI2NmJmNzhhNjZlMjE4NzZiZTNjMDUxNWFiNTVkNzEifX19", 1, "&9&lÎle aux Champignons", Arrays.asList("&7Une île aux champignons de départ.", "", "&9&l[!] &7Coûte 1000$")),
                     new Schematics.Cost(0, new HashMap<>()), 1, 0.5, 89, -0.5, 90, new SchematicWorld(XBiome.MUSHROOM_FIELDS,
                     "mushroom.schem", 90.0, true
             ), new SchematicWorld(XBiome.NETHER_WASTES,
@@ -46,9 +46,9 @@ public class Schematics {
             )))
             .build();
     public boolean abbreviatePrices = true;
-    public String buyPriceLore = "&9Buy Price: &7%vault_cost%";
-    public String levelRequirementLore = "&9[!] &7Must be level %level% to purchase";
-    public String regenDisclaimer = "&9[!] &7Applies to regeneration only";
+    public String buyPriceLore = "&9Prix : &7%vault_cost%";
+    public String levelRequirementLore = "&9[!] &7Niveau %level% requis pour acheter";
+    public String regenDisclaimer = "&9[!] &7S'applique uniquement à la régénération";
     public XSound failSound = XSound.BLOCK_ANVIL_LAND;
     public XSound successSound = XSound.ENTITY_PLAYER_LEVELUP;
 

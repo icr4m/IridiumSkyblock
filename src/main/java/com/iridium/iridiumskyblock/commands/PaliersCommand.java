@@ -15,7 +15,7 @@ import java.util.List;
 public class PaliersCommand extends Command<Island, User> {
 
     public PaliersCommand() {
-        super(Collections.singletonList("paliers"), "View island paliers", "%prefix% &7/is paliers", "", 0);
+        super(Collections.singletonList("paliers"), "Voir les paliers de l'île", "%prefix% &7/is paliers", "", 0);
     }
 
     @Override

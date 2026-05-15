@@ -20,24 +20,24 @@ public class Paliers {
 
     public List<PalierConfig> paliers = Arrays.asList(
             new PalierConfig(1, 1000, "size", 2,
-                    new Item(XMaterial.IRON_INGOT, 1, "&9&lPalier 1 &8| &7Size II",
-                            Arrays.asList("&7Reach &9%required_value% &7island value", "&7to unlock &9Size &7level &92.")),
+                    new Item(XMaterial.IRON_INGOT, 1, "&9&lPalier 1 &8| &7Taille II",
+                            Arrays.asList("&7Atteignez &9%required_value% &7de valeur d'île", "&7pour débloquer le niveau &9Taille &72.")),
                     10),
             new PalierConfig(2, 5000, "generator", 2,
-                    new Item(XMaterial.GOLD_INGOT, 1, "&9&lPalier 2 &8| &7Generator II",
-                            Arrays.asList("&7Reach &9%required_value% &7island value", "&7to unlock &9Generator &7level &92.")),
+                    new Item(XMaterial.GOLD_INGOT, 1, "&9&lPalier 2 &8| &7Générateur II",
+                            Arrays.asList("&7Atteignez &9%required_value% &7de valeur d'île", "&7pour débloquer le niveau &9Générateur &72.")),
                     12),
             new PalierConfig(3, 20000, "size", 3,
-                    new Item(XMaterial.DIAMOND, 1, "&9&lPalier 3 &8| &7Size III",
-                            Arrays.asList("&7Reach &9%required_value% &7island value", "&7to unlock &9Size &7level &93.")),
+                    new Item(XMaterial.DIAMOND, 1, "&9&lPalier 3 &8| &7Taille III",
+                            Arrays.asList("&7Atteignez &9%required_value% &7de valeur d'île", "&7pour débloquer le niveau &9Taille &73.")),
                     14)
     );
 
-    public String lockedLore = "&8[Locked] &cRequired value: &4%required_value%";
-    public String claimableLore = "&a▶ Click to claim!";
-    public String claimedLore = "&2✔ Claimed";
-    public String notEnoughValueMessage = "%prefix% &7Your island's value is too low to claim this palier.";
-    public String newPalierMessage = "%prefix% &7A new palier is available! Use &9/is paliers &7to claim it.";
+    public String lockedLore = "&8[Verrouillé] &cValeur requise : &4%required_value%";
+    public String claimableLore = "&a▶ Cliquez pour récupérer !";
+    public String claimedLore = "&2✔ Récupéré";
+    public String notEnoughValueMessage = "%prefix% &7La valeur de votre île est trop basse pour réclamer ce palier.";
+    public String newPalierMessage = "%prefix% &7Un nouveau palier est disponible ! Utilisez &9/is paliers &7pour le récupérer.";
 
     @Getter
     @Setter

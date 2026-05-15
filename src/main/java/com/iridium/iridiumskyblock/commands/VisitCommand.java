@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class VisitCommand extends Command<Island, User> {
     public VisitCommand() {
-        super(Collections.singletonList("visit"), "Visit other islands", "%prefix% &7/is visit", "", 0);
+        super(Collections.singletonList("visit"), "Visiter d'autres îles", "%prefix% &7/is visit", "", 0);
     }
 
     @Override

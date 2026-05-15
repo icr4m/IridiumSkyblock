@@ -19,7 +19,7 @@ import java.util.Optional;
 public class BiomeCommand extends Command<Island, User> {
 
     public BiomeCommand() {
-        super(Collections.singletonList("biomes"), "Refresh your Island Biome", "%prefix% &7/is biomes <biome>", "", 10);
+        super(Collections.singletonList("biomes"), "Changer le biome de votre île", "%prefix% &7/is biomes <biome>", "", 10);
     }
 
     @Override

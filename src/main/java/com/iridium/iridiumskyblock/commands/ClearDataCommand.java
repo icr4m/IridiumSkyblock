@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ClearDataCommand extends Command < Island, User > {
 
     public ClearDataCommand() {
-        super(Collections.singletonList("cleardata"), "Deletes data from database", "%prefix% &7/is cleardata <table> <team> --skip-confirm", "iridiumSkyblock.clearData", 10);
+        super(Collections.singletonList("cleardata"), "Supprime des données de la base de données", "%prefix% &7/is cleardata <table> <équipe> --skip-confirm", "iridiumSkyblock.clearData", 10);
     }
 
     @Override
