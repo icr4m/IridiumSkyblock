@@ -3,6 +3,7 @@ package com.iridium.iridiumskyblock.managers;
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.configs.SQL;
 import com.iridium.iridiumskyblock.database.Island;
+import com.iridium.iridiumskyblock.database.IslandPalier;
 import com.iridium.iridiumskyblock.database.LostItems;
 import com.iridium.iridiumskyblock.managers.tablemanagers.*;
 import com.iridium.iridiumteams.database.*;
@@ -43,6 +44,7 @@ public class DatabaseManager {
     private ForeignIslandTableManager<String, TeamReward> teamRewardsTableManager;
     private ForeignIslandTableManager<String, TeamSetting> teamSettingsTableManager;
     private SqlTableManager<TeamLog, Integer> teamLogsTableManager;
+    private TableManager<String, IslandPalier, Integer> islandPalierTableManager;
 
     public void init() throws SQLException {
         LoggerFactory.setLogBackendFactory(new NullLogBackend.NullLogBackendFactory());
@@ -84,6 +86,11 @@ public class DatabaseManager {
         this.teamRewardsTableManager = new ForeignIslandTableManager<>(teamRewards -> getDatabaseKey(teamRewards.getId()), connectionSource, TeamReward.class);
         this.teamSettingsTableManager = new ForeignIslandTableManager<>(teamSetting -> getDatabaseKey(teamSetting.getTeamID(), teamSetting.getSetting()), connectionSource, TeamSetting.class);
         this.teamLogsTableManager = new SqlTableManager<>(connectionSource, TeamLog.class);
+        this.islandPalierTableManager = new TableManager<>(
+                palier -> getDatabaseKey(palier.getIslandId(), palier.getPalierID()),
+                connectionSource,
+                IslandPalier.class
+        );
     }
 
     private String getDatabaseKey(Object... params) {

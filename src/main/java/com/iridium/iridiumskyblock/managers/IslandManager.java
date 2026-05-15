@@ -10,8 +10,10 @@ import com.iridium.iridiumcore.utils.StringUtils;
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.api.IslandCreateEvent;
 import com.iridium.iridiumskyblock.api.IslandDeleteEvent;
+import com.iridium.iridiumskyblock.configs.Paliers;
 import com.iridium.iridiumskyblock.configs.Schematics;
 import com.iridium.iridiumskyblock.database.Island;
+import com.iridium.iridiumskyblock.database.IslandPalier;
 import com.iridium.iridiumskyblock.database.User;
 import com.iridium.iridiumskyblock.gui.CreateGUI;
 import com.iridium.iridiumskyblock.managers.tablemanagers.SqlTableManager;
@@ -716,6 +718,22 @@ public class IslandManager extends TeamManager<Island, User> {
         return completableFuture;
     }
 
+    private Set<Integer> getClaimablePalierIds(Island island, double value) {
+        List<IslandPalier> claimed = IridiumSkyblock.getInstance().getDatabaseManager()
+                .getIslandPalierTableManager()
+                .getEntries(p -> p.getIslandId() == island.getId());
+        Set<Integer> claimedIds = new HashSet<>();
+        for (IslandPalier p : claimed) claimedIds.add(p.getPalierID());
+
+        Set<Integer> claimable = new HashSet<>();
+        for (Paliers.PalierConfig palier : IridiumSkyblock.getInstance().getPaliers().paliers) {
+            if (value >= palier.getRequiredValue() && !claimedIds.contains(palier.getId())) {
+                claimable.add(palier.getId());
+            }
+        }
+        return claimable;
+    }
+
     @Override
     public CompletableFuture<Void> recalculateTeam(Island island) {
         Map<XMaterial, Integer> teamBlocks = new HashMap<>();
@@ -750,6 +768,9 @@ public class IslandManager extends TeamManager<Island, User> {
                 });
             }
         }).thenRun(() -> Bukkit.getScheduler().runTask(IridiumSkyblock.getInstance(), () -> {
+            // Capture claimable palier IDs before updating block counts
+            Set<Integer> previouslyClaimable = getClaimablePalierIds(island, island.getValue());
+
             List<TeamBlock> blocks = IridiumSkyblock.getInstance().getDatabaseManager().getTeamBlockTableManager().getEntries(island);
             List<TeamSpawners> spawners = IridiumSkyblock.getInstance().getDatabaseManager().getTeamSpawnerTableManager().getEntries(island);
             for (TeamBlock teamBlock : blocks) {
@@ -757,6 +778,18 @@ public class IslandManager extends TeamManager<Island, User> {
             }
             for (TeamSpawners teamSpawner : spawners) {
                 teamSpawner.setAmount(teamSpawners.getOrDefault(teamSpawner.getEntityType(), 0));
+            }
+
+            // Notify online members about newly unlocked paliers
+            Set<Integer> nowClaimable = getClaimablePalierIds(island, island.getValue());
+            nowClaimable.removeAll(previouslyClaimable);
+            if (!nowClaimable.isEmpty()) {
+                String message = StringUtils.color(IridiumSkyblock.getInstance().getPaliers().newPalierMessage
+                        .replace("%prefix%", IridiumSkyblock.getInstance().getConfiguration().prefix));
+                getTeamMembers(island).stream()
+                        .map(User::getPlayer)
+                        .filter(Objects::nonNull)
+                        .forEach(p -> p.sendMessage(message));
             }
         }));
     }

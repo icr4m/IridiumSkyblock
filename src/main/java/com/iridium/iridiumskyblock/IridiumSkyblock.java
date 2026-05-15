@@ -53,6 +53,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
     private BankItems bankItems;
     private Enhancements enhancements;
     private BlockValues blockValues;
+    private Paliers paliers;
     private Top top;
     private SQL sql;
     private Missions missions;
@@ -204,6 +205,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         this.bankItems = getPersist().load(BankItems.class);
         this.enhancements = getPersist().load(Enhancements.class);
         this.blockValues = getPersist().load(BlockValues.class);
+        this.paliers = getPersist().load(Paliers.class);
         this.top = getPersist().load(Top.class);
         this.missions = getPersist().load(Missions.class);
         this.schematics = getPersist().load(Schematics.class);
@@ -244,6 +246,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         getPersist().save(bankItems);
         getPersist().save(enhancements);
         getPersist().save(blockValues);
+        getPersist().save(paliers);
         getPersist().save(top);
         getPersist().save(missions);
         getPersist().save(schematics);
@@ -272,6 +275,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         getDatabaseManager().getTeamRewardsTableManager().save();
         getDatabaseManager().getTeamSettingsTableManager().save();
         getDatabaseManager().getLostItemsTableManager().save();
+        getDatabaseManager().getIslandPalierTableManager().save();
     }
 
     @Override
