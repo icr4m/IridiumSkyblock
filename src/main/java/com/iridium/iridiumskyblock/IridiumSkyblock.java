@@ -192,6 +192,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         Bukkit.getPluginManager().registerEvents(new EntityDamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityPortalListener(), this);
         if(!XReflection.supports(15)) Bukkit.getPluginManager().registerEvents(new PortalCreateListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CropBoostListener(), this);
     }
 
     @Override
@@ -290,6 +291,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         addEnhancement("size", getEnhancements().sizeEnhancement);
         addEnhancement("void", getEnhancements().voidEnhancement);
         addEnhancement("generator", getEnhancements().generatorEnhancement);
+        addEnhancement("cropBoost", getEnhancements().cropBoostEnhancement);
     }
 
     @Override

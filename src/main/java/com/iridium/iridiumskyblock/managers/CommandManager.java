@@ -5,6 +5,7 @@ import com.iridium.iridiumskyblock.commands.supersecretcommands.IsMyComputerOnFi
 import com.iridium.iridiumskyblock.commands.supersecretcommands.IsThisWorking;
 import com.iridium.iridiumskyblock.database.Island;
 import com.iridium.iridiumskyblock.database.User;
+import com.iridium.iridiumteams.commands.BoostersCommand;
 import com.iridium.iridiumteams.gui.InventoryConfigGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -19,6 +20,7 @@ public class CommandManager extends com.iridium.iridiumteams.managers.CommandMan
     @Override
     public void registerCommands() {
         super.registerCommands();
+        getCommands().removeIf(cmd -> cmd instanceof BoostersCommand);
         registerCommand(IridiumSkyblock.getInstance().getCommands().visitCommand);
         registerCommand(IridiumSkyblock.getInstance().getCommands().borderCommand);
         registerCommand(IridiumSkyblock.getInstance().getCommands().regenCommand);

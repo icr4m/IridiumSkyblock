@@ -3,6 +3,7 @@ package com.iridium.iridiumskyblock.configs;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import com.iridium.iridiumcore.Item;
+import com.iridium.iridiumskyblock.enhancements.CropBoostEnhancementData;
 import com.iridium.iridiumskyblock.enhancements.GeneratorEnhancementData;
 import com.iridium.iridiumskyblock.enhancements.SizeEnhancementData;
 import com.iridium.iridiumskyblock.enhancements.VoidEnhancementData;
@@ -15,21 +16,21 @@ public class Enhancements extends com.iridium.iridiumteams.configs.Enhancements 
 
     public Enhancements() {
         super("&9");
-        this.membersEnhancement.item.slot = 10;
-        this.warpsEnhancement.item.slot = 12;
-        this.potionEnhancements.get("haste").item.slot = 14;
-        this.potionEnhancements.get("speed").item.slot = 15;
-        this.potionEnhancements.get("jump").item.slot = 16;
 
-        this.farmingEnhancement.levels.forEach((integer, farmingEnhancementData) -> farmingEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.spawnerEnhancement.levels.forEach((integer, spawnerEnhancementData) -> spawnerEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.experienceEnhancement.levels.forEach((integer, experienceEnhancementData) -> experienceEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.flightEnhancement.levels.forEach((integer, flightEnhancementData) -> flightEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
+        // Disable booster-type enhancements
+        this.farmingEnhancement.enabled = false;
+        this.spawnerEnhancement.enabled = false;
+        this.experienceEnhancement.enabled = false;
+        this.flightEnhancement.enabled = false;
+
+        // Disable unused upgrade-type enhancements
+        this.potionEnhancements.get("haste").enabled = false;
+        this.potionEnhancements.get("speed").enabled = false;
+        this.potionEnhancements.get("jump").enabled = false;
+        this.warpsEnhancement.enabled = false;
+
+        this.membersEnhancement.item.slot = 10;
         this.membersEnhancement.levels.forEach((integer, membersEnhancementData) -> membersEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.warpsEnhancement.levels.forEach((integer, warpsEnhancementData) -> warpsEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.potionEnhancements.get("haste").levels.forEach((integer, potionEnhancementData) -> potionEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.potionEnhancements.get("speed").levels.forEach((integer, potionEnhancementData) -> potionEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
-        this.potionEnhancements.get("jump").levels.forEach((integer, potionEnhancementData) -> potionEnhancementData.bankCosts = new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build());
     }
 
     public Enhancement<SizeEnhancementData> sizeEnhancement = new Enhancement<>(true, EnhancementType.UPGRADE, new Item(XMaterial.GRASS_BLOCK, 11, 1, "&9&lSize Upgrade", Arrays.asList(
@@ -47,8 +48,7 @@ public class Enhancements extends com.iridium.iridiumteams.configs.Enhancements 
             "&9&l * &7Level 4: &9125x125 Blocks",
             "&9&l * &7Level 5: &9150x150 Blocks",
             "",
-            "&9[!] &7Must be level %minLevel% to purchase",
-            "&9&l[!] " + "&9Left Click to Purchase Level %next_level%."
+            "&9&l[!] &7Obtenu via &9/is paliers&7."
     )), new ImmutableMap.Builder<Integer, SizeEnhancementData>()
             .put(0, new SizeEnhancementData(5, 10000, new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build(), 50))
             .put(1, new SizeEnhancementData(5, 10000, new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build(), 75))
@@ -76,6 +76,26 @@ public class Enhancements extends com.iridium.iridiumteams.configs.Enhancements 
             "&9&l[!] " + "&9Left Click to Purchase Level %next_level%."
     )), new ImmutableMap.Builder<Integer, VoidEnhancementData>()
             .put(0, new VoidEnhancementData(5, 10000, new ImmutableMap.Builder<String, Double>().put("Crystals", 5.00).build(), true, 0.00))
+            .build());
+
+    public Enhancement<CropBoostEnhancementData> cropBoostEnhancement = new Enhancement<>(true, EnhancementType.UPGRADE, new Item(XMaterial.WHEAT, 12, 1, "&9&lCrop Boost", Arrays.asList(
+            "&7Augmente les drops de vos cultures.",
+            "",
+            "&9&lInformations :",
+            "&9&l * &7Niveau actuel : &9%current_level%",
+            "&9&l * &7Coût : &9%vault_cost%, %Crystals_cost% Crystals",
+            "&9&lNiveaux :",
+            "&9&l * &7Niveau 1 : &9+25% drops",
+            "&9&l * &7Niveau 2 : &9+50% drops",
+            "&9&l * &7Niveau 3 : &9+75% drops",
+            "&9&l * &7Niveau 4 : &9+100% drops",
+            "",
+            "&9&l[!] &7Obtenu via &9/is paliers&7."
+    )), new ImmutableMap.Builder<Integer, CropBoostEnhancementData>()
+            .put(0, new CropBoostEnhancementData(0, 0, new ImmutableMap.Builder<String, Double>().put("Crystals", 500.00).build(), 0.25))
+            .put(1, new CropBoostEnhancementData(0, 0, new ImmutableMap.Builder<String, Double>().put("Crystals", 1000.00).build(), 0.50))
+            .put(2, new CropBoostEnhancementData(0, 0, new ImmutableMap.Builder<String, Double>().put("Crystals", 2000.00).build(), 0.75))
+            .put(3, new CropBoostEnhancementData(0, 0, new ImmutableMap.Builder<String, Double>().put("Crystals", 4000.00).build(), 1.00))
             .build());
 
     public Enhancement<GeneratorEnhancementData> generatorEnhancement = new Enhancement<>(true, EnhancementType.UPGRADE, new Item(XMaterial.DIAMOND_ORE, 13, 1, "&9&lGenerator Upgrade", Arrays.asList(
