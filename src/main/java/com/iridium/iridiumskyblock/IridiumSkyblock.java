@@ -52,6 +52,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
     private Commands commands;
     private BankItems bankItems;
     private Enhancements enhancements;
+    private CustomItems customItems;
     private BlockValues blockValues;
     private Paliers paliers;
     private Top top;
@@ -205,6 +206,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         this.permissions = getPersist().load(Permissions.class);
         this.bankItems = getPersist().load(BankItems.class);
         this.enhancements = getPersist().load(Enhancements.class);
+        this.customItems = getPersist().load(CustomItems.class);
         this.blockValues = getPersist().load(BlockValues.class);
         this.paliers = getPersist().load(Paliers.class);
         this.top = getPersist().load(Top.class);
@@ -246,6 +248,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         getPersist().save(permissions);
         getPersist().save(bankItems);
         getPersist().save(enhancements);
+        getPersist().save(customItems);
         getPersist().save(blockValues);
         getPersist().save(paliers);
         getPersist().save(top);

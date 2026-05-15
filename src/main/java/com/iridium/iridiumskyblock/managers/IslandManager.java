@@ -19,10 +19,14 @@ import com.iridium.iridiumskyblock.gui.CreateGUI;
 import com.iridium.iridiumskyblock.managers.tablemanagers.SqlTableManager;
 import com.iridium.iridiumskyblock.utils.LocationUtils;
 import com.iridium.iridiumskyblock.utils.PlayerUtils;
+import com.iridium.iridiumskyblock.configs.CustomItems;
+import com.iridium.iridiumskyblock.enhancements.SkyblockEnhancementData;
 import com.iridium.iridiumteams.LogType;
 import com.iridium.iridiumteams.Rank;
 import com.iridium.iridiumteams.Setting;
 import com.iridium.iridiumteams.database.*;
+import com.iridium.iridiumteams.enhancements.Enhancement;
+import com.iridium.iridiumteams.enhancements.EnhancementType;
 import com.iridium.iridiumteams.managers.TeamManager;
 import com.iridium.iridiumteams.missions.Mission;
 import com.iridium.iridiumteams.missions.MissionData;
@@ -1095,6 +1099,94 @@ public class IslandManager extends TeamManager<Island, User> {
             } catch (NullPointerException e) {
                 IridiumSkyblock.getInstance().getLogger().warning("Cannot mutate user: " + user.getName() + ". Either player or compound doesn't exist (See stacktrace for details).");
                 IridiumSkyblock.getInstance().getLogger().warning(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public boolean UpdateEnhancement(Island team, String enhancementName, Player player) {
+        Enhancement<?> enhancement = IridiumSkyblock.getInstance().getEnhancementList().get(enhancementName);
+        if (enhancement != null) {
+            TeamEnhancement teamEnhancement = getTeamEnhancement(team, enhancementName);
+            int currentLevel = teamEnhancement.isActive(enhancement.type) ? teamEnhancement.getLevel() : 0;
+            Object levelData = enhancement.levels.get(currentLevel + 1);
+            if (levelData instanceof SkyblockEnhancementData) {
+                SkyblockEnhancementData data = (SkyblockEnhancementData) levelData;
+                if (!data.inventoryCosts.isEmpty() && !hasInventoryItems(player, data.inventoryCosts)) {
+                    return false;
+                }
+            }
+        }
+
+        boolean success = super.UpdateEnhancement(team, enhancementName, player);
+
+        if (success && enhancement != null) {
+            TeamEnhancement teamEnhancement = getTeamEnhancement(team, enhancementName);
+            Object levelData = enhancement.levels.get(teamEnhancement.getLevel());
+            if (levelData instanceof SkyblockEnhancementData) {
+                SkyblockEnhancementData data = (SkyblockEnhancementData) levelData;
+                if (!data.inventoryCosts.isEmpty()) {
+                    removeInventoryItems(player, data.inventoryCosts);
+                }
+            }
+        }
+
+        return success;
+    }
+
+    private boolean hasInventoryItems(Player player, Map<String, Integer> costs) {
+        Map<String, CustomItems.CustomItemDefinition> itemDefs = IridiumSkyblock.getInstance().getCustomItems().items;
+        for (Map.Entry<String, Integer> entry : costs.entrySet()) {
+            CustomItems.CustomItemDefinition def = itemDefs.get(entry.getKey());
+            if (def == null) continue;
+            if (countMatchingItems(player, def) < entry.getValue()) {
+                String message = IridiumSkyblock.getInstance().getMessages().notEnoughInventoryItems
+                        .replace("%prefix%", IridiumSkyblock.getInstance().getConfiguration().prefix)
+                        .replace("%item%", entry.getKey());
+                player.sendMessage(StringUtils.color(message));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int countMatchingItems(Player player, CustomItems.CustomItemDefinition def) {
+        int total = 0;
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (def.matches(item)) total += item.getAmount();
+        }
+        return total;
+    }
+
+    private void removeInventoryItems(Player player, Map<String, Integer> costs) {
+        Map<String, CustomItems.CustomItemDefinition> itemDefs = IridiumSkyblock.getInstance().getCustomItems().items;
+        for (Map.Entry<String, Integer> entry : costs.entrySet()) {
+            CustomItems.CustomItemDefinition def = itemDefs.get(entry.getKey());
+            if (def == null) continue;
+            removeMatchingItems(player, def, entry.getValue());
+        }
+    }
+
+    private void removeMatchingItems(Player player, CustomItems.CustomItemDefinition def, int toRemove) {
+        ItemStack[] contents = player.getInventory().getContents();
+
+        // Collect matching slots and sort by stack size ascending (smallest stacks first)
+        List<Integer> slots = new ArrayList<>();
+        for (int i = 0; i < contents.length; i++) {
+            if (def.matches(contents[i])) slots.add(i);
+        }
+        slots.sort(Comparator.comparingInt(i -> contents[i].getAmount()));
+
+        for (int slot : slots) {
+            if (toRemove <= 0) break;
+            ItemStack item = contents[slot];
+            int amount = item.getAmount();
+            if (amount <= toRemove) {
+                toRemove -= amount;
+                player.getInventory().setItem(slot, null);
+            } else {
+                item.setAmount(amount - toRemove);
+                toRemove = 0;
             }
         }
     }

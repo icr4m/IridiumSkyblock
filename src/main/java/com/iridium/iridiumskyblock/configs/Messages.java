@@ -32,4 +32,5 @@ public class Messages extends com.iridium.iridiumteams.configs.Messages {
     public String specifyData = "%prefix% &7En raison de la nature destructrice de cette commande, vous devez préciser les données à supprimer (ou indiquer \"all\").";
     public String confirmDataDeletion = "%prefix% &7Vous êtes sur le point de supprimer les données suivantes : %table% | [pour : %island%] dans 5 secondes. &cÊtes-vous sûr ? (LES DONNÉES SONT &4&lINRÉCUPÉRABLES&r&c)";
     public String dataDeletion = "%prefix% &cLes données ont été supprimées avec succès. &7Vous devrez peut-être redémarrer votre serveur pour que cela prenne effet.";
+    public String notEnoughInventoryItems = "%prefix% &cVous n'avez pas assez de %item% dans votre inventaire.";
 }

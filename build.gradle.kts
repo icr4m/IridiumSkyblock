@@ -34,6 +34,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("net.ess3:EssentialsXSpawn:2.16.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.13-SNAPSHOT")
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
 
     // Enable lombok annotation processing
     annotationProcessor("org.projectlombok:lombok:1.18.46")
@@ -55,7 +56,8 @@ bukkit {
         "EssentialsSpawn",
         "RoseStacker",
         "WorldEdit",
-        "ObsidianStacker"
+        "ObsidianStacker",
+        "ItemsAdder"
     )
 
     commands {
