@@ -1,7 +1,6 @@
 package com.iridium.iridiumskyblock.gui;
 
 import com.iridium.iridiumcore.gui.BackGUI;
-import com.iridium.iridiumcore.utils.ItemStackUtils;
 import com.iridium.iridiumcore.utils.StringUtils;
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.configs.Paliers;
@@ -9,6 +8,7 @@ import com.iridium.iridiumskyblock.database.Island;
 import com.iridium.iridiumskyblock.database.IslandPalier;
 import com.iridium.iridiumteams.database.TeamEnhancement;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class PaliersGUI extends BackGUI {
@@ -52,13 +51,22 @@ public class PaliersGUI extends BackGUI {
             boolean claimed = claimedPaliers.stream().anyMatch(p -> p.getPalierID() == palierConfig.getId());
             boolean unlocked = islandValue >= palierConfig.getRequiredValue();
 
-            ItemStack itemStack = ItemStackUtils.makeItem(palierConfig.getItem());
-            ItemMeta meta = itemStack.getItemMeta();
-            List<String> lore = meta.getLore() != null ? new ArrayList<>(meta.getLore()) : new ArrayList<>();
+            Material glassMaterial;
+            if (claimed) {
+                glassMaterial = Material.GREEN_STAINED_GLASS_PANE;
+            } else if (unlocked) {
+                glassMaterial = Material.PURPLE_STAINED_GLASS_PANE;
+            } else {
+                glassMaterial = Material.RED_STAINED_GLASS_PANE;
+            }
 
-            // Replace %required_value% in existing lore
-            lore.replaceAll(line -> line.replace("%required_value%",
-                    String.valueOf((long) palierConfig.getRequiredValue())));
+            ItemStack itemStack = new ItemStack(glassMaterial);
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setDisplayName(StringUtils.color(palierConfig.getName()));
+
+            List<String> lore = palierConfig.getLore() != null ? new ArrayList<>(palierConfig.getLore()) : new ArrayList<>();
+            lore.replaceAll(line -> StringUtils.color(line.replace("%required_value%",
+                    String.valueOf((long) palierConfig.getRequiredValue()))));
 
             lore.add("");
             if (claimed) {
