@@ -15,4 +15,5 @@ public class Commands extends com.iridium.iridiumteams.configs.Commands<Island, 
     public BiomeCommand biomeCommand = new BiomeCommand();
     public ClearDataCommand clearDataCommand = new ClearDataCommand();
     public PaliersCommand paliersCommand = new PaliersCommand();
+    public LimitsCommand limitsCommand = new LimitsCommand();
 }

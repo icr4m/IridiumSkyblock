@@ -54,6 +54,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
     private Enhancements enhancements;
     private CustomItems customItems;
     private BlockValues blockValues;
+    private BlockLimits blockLimits;
     private Paliers paliers;
     private Top top;
     private SQL sql;
@@ -194,6 +195,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         Bukkit.getPluginManager().registerEvents(new EntityPortalListener(), this);
         if(!XReflection.supports(15)) Bukkit.getPluginManager().registerEvents(new PortalCreateListener(), this);
         Bukkit.getPluginManager().registerEvents(new CropBoostListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockLimitListener(), this);
     }
 
     @Override
@@ -208,6 +210,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         this.enhancements = getPersist().load(Enhancements.class);
         this.customItems = getPersist().load(CustomItems.class);
         this.blockValues = getPersist().load(BlockValues.class);
+        this.blockLimits = getPersist().load(BlockLimits.class);
         this.paliers = getPersist().load(Paliers.class);
         this.top = getPersist().load(Top.class);
         this.missions = getPersist().load(Missions.class);
@@ -250,6 +253,7 @@ public class IridiumSkyblock extends IridiumTeams<Island, User> {
         getPersist().save(enhancements);
         getPersist().save(customItems);
         getPersist().save(blockValues);
+        getPersist().save(blockLimits);
         getPersist().save(paliers);
         getPersist().save(top);
         getPersist().save(missions);
